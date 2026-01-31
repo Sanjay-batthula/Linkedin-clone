@@ -39,7 +39,7 @@ export const Navbar = () => {
     { icon: Bell, label: 'Notifications', active: false },
   ];
 
-  const getInitials = (name: string) => {
+  const getInitials = (name) => {
     return name
       .split(' ')
       .map(n => n[0])
