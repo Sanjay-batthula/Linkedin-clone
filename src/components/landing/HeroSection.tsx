@@ -1,12 +1,6 @@
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { LoginForm } from './LoginForm';
-import { SignupForm } from './SignupForm';
 
 export const HeroSection = () => {
-  const [showLogin, setShowLogin] = useState(false);
-  const [showSignup, setShowSignup] = useState(false);
-
   return (
     <div className="relative min-h-screen flex flex-col md:flex-row items-center justify-center overflow-hidden">
       {/* Background Video */}
@@ -41,45 +35,23 @@ export const HeroSection = () => {
         </div>
 
         {/* Auth Buttons */}
-        {!showLogin && !showSignup && (
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button 
-              onClick={() => setShowLogin(true)}
+        <div className="flex flex-col sm:flex-row gap-4">
+          <a href="/auth">
+            <Button
               className="btn-linkedin min-w-[200px] text-lg h-12"
             >
               Sign in
             </Button>
-            <Button 
-              onClick={() => setShowSignup(true)}
+          </a>
+          <a href="/auth">
+            <Button
               variant="outline"
               className="btn-linkedin-outline min-w-[200px] text-lg h-12"
             >
               Join now
             </Button>
-          </div>
-        )}
-
-        {/* Login Form */}
-        {showLogin && (
-          <LoginForm 
-            onBack={() => setShowLogin(false)} 
-            onSwitchToSignup={() => {
-              setShowLogin(false);
-              setShowSignup(true);
-            }}
-          />
-        )}
-
-        {/* Signup Form */}
-        {showSignup && (
-          <SignupForm 
-            onBack={() => setShowSignup(false)}
-            onSwitchToLogin={() => {
-              setShowSignup(false);
-              setShowLogin(true);
-            }}
-          />
-        )}
+          </a>
+        </div>
       </div>
 
       {/* Right Side: Image */}
