@@ -10,11 +10,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/contexts/AuthContext';
-import { toggleLike, deletePost, updatePost, addComment } from '@/lib/localStorage';
+import { Post, toggleLike, deletePost, updatePost, addComment } from '@/lib/localStorage';
 import { ThumbsUp, MessageCircle, MoreHorizontal, Pencil, Trash2, Send, Globe } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
-export const PostCard = ({ post, onPostUpdated }) => {
+interface PostCardProps {
+  post: Post;
+  onPostUpdated: () => void;
+}
+
+export const PostCard = ({ post, onPostUpdated }: PostCardProps) => {
   const { session } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(post.content);
@@ -24,7 +29,7 @@ export const PostCard = ({ post, onPostUpdated }) => {
   const isOwner = session?.userId === post.userId;
   const isLiked = session ? post.likes.includes(session.userId) : false;
 
-  const getInitials = (name) => {
+  const getInitials = (name: string) => {
     return name
       .split(' ')
       .map(n => n[0])

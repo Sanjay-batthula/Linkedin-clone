@@ -23,7 +23,7 @@ export const LeftSidebar = () => {
   const [editHeadline, setEditHeadline] = useState(session?.headline || '');
   const [localSession, setLocalSession] = useState(session);
 
-  const getInitials = (name) => {
+  const getInitials = (name: string) => {
     return name
       .split(' ')
       .map(n => n[0])

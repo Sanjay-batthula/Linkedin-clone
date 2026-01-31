@@ -7,22 +7,35 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 
-export const LoginForm = ({ onBack, onSwitchToSignup }) => {
+interface SignupFormProps {
+  onBack: () => void;
+  onSwitchToLogin: () => void;
+}
+
+export const SignupForm = ({ onBack, onSwitchToLogin }: SignupFormProps) => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [headline, setHeadline] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { signup } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
 
-    // Basic validation
-    if (!email.trim() || !password.trim()) {
-      setError('Please fill in all fields');
+    // Validation
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setError('Please fill in all required fields');
+      setIsLoading(false);
+      return;
+    }
+
+    if (name.trim().length < 2) {
+      setError('Name must be at least 2 characters');
       setIsLoading(false);
       return;
     }
@@ -34,18 +47,23 @@ export const LoginForm = ({ onBack, onSwitchToSignup }) => {
       return;
     }
 
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters');
+      setIsLoading(false);
+      return;
+    }
+
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    // If login is async, await it. If not, keep as is.
-    const result = login(email, password);
-
+    const result = signup(name.trim(), email.trim(), password, headline.trim() || undefined);
+    
     if (result.success) {
       navigate('/dashboard');
     } else {
-      setError(result.error || 'Login failed');
+      setError(result.error || 'Signup failed');
     }
-
+    
     setIsLoading(false);
   };
 
@@ -61,10 +79,10 @@ export const LoginForm = ({ onBack, onSwitchToSignup }) => {
           >
             <ArrowLeft className="h-4 w-4" />
           </Button>
-          <CardTitle className="text-2xl font-bold">Sign in</CardTitle>
+          <CardTitle className="text-2xl font-bold">Join LinkUp</CardTitle>
         </div>
         <p className="text-muted-foreground text-sm">
-          Stay updated on your professional world
+          Make the most of your professional life
         </p>
       </CardHeader>
       <form onSubmit={handleSubmit}>
@@ -75,9 +93,21 @@ export const LoginForm = ({ onBack, onSwitchToSignup }) => {
             </div>
           )}
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="name">Full name *</Label>
             <Input
-              id="email"
+              id="name"
+              type="text"
+              placeholder="Enter your full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="h-11"
+              disabled={isLoading}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="signup-email">Email *</Label>
+            <Input
+              id="signup-email"
               type="email"
               placeholder="Enter your email"
               value={email}
@@ -87,13 +117,25 @@ export const LoginForm = ({ onBack, onSwitchToSignup }) => {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="signup-password">Password *</Label>
             <Input
-              id="password"
+              id="signup-password"
               type="password"
-              placeholder="Enter your password"
+              placeholder="6+ characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              className="h-11"
+              disabled={isLoading}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="headline">Headline (optional)</Label>
+            <Input
+              id="headline"
+              type="text"
+              placeholder="e.g. Software Engineer at Google"
+              value={headline}
+              onChange={(e) => setHeadline(e.target.value)}
               className="h-11"
               disabled={isLoading}
             />
@@ -108,20 +150,20 @@ export const LoginForm = ({ onBack, onSwitchToSignup }) => {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Signing in...
+                Creating account...
               </>
             ) : (
-              'Sign in'
+              'Agree & Join'
             )}
           </Button>
           <p className="text-sm text-center text-muted-foreground">
-            New to LinkUp?{' '}
+            Already on LinkUp?{' '}
             <button 
               type="button"
-              onClick={onSwitchToSignup}
+              onClick={onSwitchToLogin}
               className="link-primary font-semibold"
             >
-              Join now
+              Sign in
             </button>
           </p>
         </CardFooter>

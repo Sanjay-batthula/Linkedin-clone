@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import { CreatePost } from './CreatePost';
 import { PostCard } from './PostCard';
-import { getPosts } from '@/lib/localStorage';
+import { getPosts, Post } from '@/lib/localStorage';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export const MainFeed = () => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [sortBy, setSortBy] = useState('recent');
 
   const loadPosts = () => {
     let allPosts = getPosts();
-
+    
     // Sort posts
     if (sortBy === 'recent') {
       allPosts = allPosts.sort((a, b) => 
@@ -19,7 +19,7 @@ export const MainFeed = () => {
     } else if (sortBy === 'top') {
       allPosts = allPosts.sort((a, b) => b.likes.length - a.likes.length);
     }
-
+    
     setPosts(allPosts);
   };
 

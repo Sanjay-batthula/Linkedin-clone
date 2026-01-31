@@ -7,13 +7,17 @@ import { useAuth } from '@/contexts/AuthContext';
 import { createPost } from '@/lib/localStorage';
 import { Loader2 } from 'lucide-react';
 
-export const CreatePost = ({ onPostCreated }) => {
+interface CreatePostProps {
+  onPostCreated: () => void;
+}
+
+export const CreatePost = ({ onPostCreated }: CreatePostProps) => {
   const { session } = useAuth();
   const [content, setContent] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPosting, setIsPosting] = useState(false);
 
-  const getInitials = (name) => {
+  const getInitials = (name: string) => {
     return name
       .split(' ')
       .map(n => n[0])
