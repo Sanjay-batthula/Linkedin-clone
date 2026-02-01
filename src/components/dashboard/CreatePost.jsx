@@ -7,17 +7,13 @@ import { useAuth } from '@/contexts/AuthContext';
 import { createPost } from '@/lib/localStorage';
 import { Loader2 } from 'lucide-react';
 
-interface CreatePostProps {
-  onPostCreated: () => void;
-}
-
-export const CreatePost = ({ onPostCreated }: CreatePostProps) => {
+export const CreatePost = ({ onPostCreated }) => {
   const { session } = useAuth();
   const [content, setContent] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPosting, setIsPosting] = useState(false);
 
-  const getInitials = (name: string) => {
+  const getInitials = (name) => {
     return name
       .split(' ')
       .map(n => n[0])
@@ -30,7 +26,6 @@ export const CreatePost = ({ onPostCreated }: CreatePostProps) => {
     if (!content.trim() || !session) return;
 
     setIsPosting(true);
-    
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 300));
 

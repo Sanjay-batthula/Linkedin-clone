@@ -12,7 +12,7 @@ export const RightSidebar = () => {
 
   const trendingTopics = [
     { topic: 'Making AI part of daily work', readers: '2,971 readers', time: '1d ago' },
-    { topic: 'LinkedIn India\'s newest Top Voices', readers: '1,671 readers', time: '1d ago' },
+    { topic: "LinkedIn India's newest Top Voices", readers: '1,671 readers', time: '1d ago' },
     { topic: 'Gen Z drives beauty shift', readers: '1,243 readers', time: '22h ago' },
     { topic: 'Remote work trends 2026', readers: '619 readers', time: '1d ago' },
     { topic: 'Tech hiring rebounds', readers: '545 readers', time: '1d ago' },
@@ -45,7 +45,6 @@ export const RightSidebar = () => {
           </Button>
         </CardContent>
       </Card>
-
       {/* Suggested Connections */}
       <Card className="card-elevated">
         <CardHeader className="pb-3">
@@ -75,7 +74,6 @@ export const RightSidebar = () => {
           ))}
         </CardContent>
       </Card>
-
       {/* Footer Links */}
       <div className="text-xs text-muted-foreground space-y-2 px-2">
         <div className="flex flex-wrap gap-x-3 gap-y-1">

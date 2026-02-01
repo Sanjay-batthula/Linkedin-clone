@@ -1,16 +1,15 @@
 import { useState, useEffect } from 'react';
 import { CreatePost } from './CreatePost';
 import { PostCard } from './PostCard';
-import { getPosts, Post } from '@/lib/localStorage';
+import { getPosts } from '@/lib/localStorage';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export const MainFeed = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState([]);
   const [sortBy, setSortBy] = useState('recent');
 
   const loadPosts = () => {
     let allPosts = getPosts();
-    
     // Sort posts
     if (sortBy === 'recent') {
       allPosts = allPosts.sort((a, b) => 
@@ -19,7 +18,6 @@ export const MainFeed = () => {
     } else if (sortBy === 'top') {
       allPosts = allPosts.sort((a, b) => b.likes.length - a.likes.length);
     }
-    
     setPosts(allPosts);
   };
 
@@ -36,7 +34,6 @@ export const MainFeed = () => {
   return (
     <main className="flex-1 max-w-xl space-y-4">
       <CreatePost onPostCreated={loadPosts} />
-      
       {posts.length > 0 && (
         <div className="flex items-center justify-end gap-2 text-sm">
           <span className="text-muted-foreground">Sort by:</span>
@@ -51,7 +48,6 @@ export const MainFeed = () => {
           </Select>
         </div>
       )}
-      
       {posts.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-muted-foreground text-lg mb-2">No posts yet</p>

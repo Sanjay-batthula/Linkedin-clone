@@ -13,7 +13,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog';
 import { useAuth } from '@/contexts/AuthContext';
-import { updateUser, getSession, saveSession } from '@/lib/localStorage';
+import { updateUser, saveSession } from '@/lib/localStorage';
 import { Bookmark, Users, Pencil } from 'lucide-react';
 
 export const LeftSidebar = () => {
@@ -23,7 +23,7 @@ export const LeftSidebar = () => {
   const [editHeadline, setEditHeadline] = useState(session?.headline || '');
   const [localSession, setLocalSession] = useState(session);
 
-  const getInitials = (name: string) => {
+  const getInitials = (name) => {
     return name
       .split(' ')
       .map(n => n[0])
@@ -71,7 +71,7 @@ export const LeftSidebar = () => {
 
   return (
     <>
-      <aside className="w-56 space-y-4 sticky top-20 h-fit">
+      <aside className="w-40 space-y-4 sticky top-20 h-fit">
         {/* Profile Card */}
         <Card className="card-elevated overflow-hidden">
           {/* Banner */}
@@ -85,7 +85,6 @@ export const LeftSidebar = () => {
               <Pencil className="h-3 w-3" />
             </Button>
           </div>
-          
           {/* Profile Info */}
           <CardContent className="pt-0 pb-4 text-center -mt-8">
             <button onClick={handleOpenEdit} className="group">
@@ -102,7 +101,6 @@ export const LeftSidebar = () => {
               {displaySession?.headline}
             </p>
           </CardContent>
-
           {/* Stats */}
           <div className="border-t border-border">
             <button className="w-full px-4 py-3 text-left hover:bg-muted/50 transition-colors">
@@ -125,7 +123,6 @@ export const LeftSidebar = () => {
             </button>
           </div>
         </Card>
-
         {/* Shortcuts */}
         <Card className="card-elevated">
           <CardContent className="p-3">
@@ -144,7 +141,6 @@ export const LeftSidebar = () => {
           </CardContent>
         </Card>
       </aside>
-
       {/* Edit Profile Dialog */}
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
         <DialogContent className="sm:max-w-md">

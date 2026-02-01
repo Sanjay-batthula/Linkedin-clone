@@ -10,16 +10,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/contexts/AuthContext';
-import { Post, toggleLike, deletePost, updatePost, addComment } from '@/lib/localStorage';
+import { toggleLike, deletePost, updatePost, addComment } from '@/lib/localStorage';
 import { ThumbsUp, MessageCircle, MoreHorizontal, Pencil, Trash2, Send, Globe } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
-interface PostCardProps {
-  post: Post;
-  onPostUpdated: () => void;
-}
-
-export const PostCard = ({ post, onPostUpdated }: PostCardProps) => {
+export const PostCard = ({ post, onPostUpdated }) => {
   const { session } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(post.content);
@@ -29,7 +24,7 @@ export const PostCard = ({ post, onPostUpdated }: PostCardProps) => {
   const isOwner = session?.userId === post.userId;
   const isLiked = session ? post.likes.includes(session.userId) : false;
 
-  const getInitials = (name: string) => {
+  const getInitials = (name) => {
     return name
       .split(' ')
       .map(n => n[0])
@@ -92,7 +87,6 @@ export const PostCard = ({ post, onPostUpdated }: PostCardProps) => {
               </div>
             </div>
           </div>
-
           {isOwner && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -113,7 +107,6 @@ export const PostCard = ({ post, onPostUpdated }: PostCardProps) => {
             </DropdownMenu>
           )}
         </div>
-
         {/* Content */}
         {isEditing ? (
           <div className="space-y-3">
@@ -146,7 +139,6 @@ export const PostCard = ({ post, onPostUpdated }: PostCardProps) => {
         ) : (
           <p className="text-foreground whitespace-pre-wrap mb-4">{post.content}</p>
         )}
-
         {/* Stats */}
         {(post.likes.length > 0 || post.comments.length > 0) && (
           <div className="flex items-center justify-between text-sm text-muted-foreground py-2 border-t border-border">
@@ -168,7 +160,6 @@ export const PostCard = ({ post, onPostUpdated }: PostCardProps) => {
             )}
           </div>
         )}
-
         {/* Actions */}
         <div className="flex items-center border-t border-border pt-2">
           <Button
@@ -190,7 +181,6 @@ export const PostCard = ({ post, onPostUpdated }: PostCardProps) => {
             Comment
           </Button>
         </div>
-
         {/* Comments Section */}
         {showComments && (
           <div className="mt-4 pt-4 border-t border-border space-y-4">
@@ -219,7 +209,6 @@ export const PostCard = ({ post, onPostUpdated }: PostCardProps) => {
                 </Button>
               </div>
             </div>
-
             {/* Comments List */}
             {post.comments.map((comment) => (
               <div key={comment.id} className="flex gap-2">

@@ -39,7 +39,7 @@ export const Navbar = () => {
     { icon: Bell, label: 'Notifications', active: false },
   ];
 
-  const getInitials = (name: string) => {
+  const getInitials = (name) => {
     return name
       .split(' ')
       .map(n => n[0])
@@ -67,7 +67,6 @@ export const Navbar = () => {
               />
             </div>
           </div>
-
           {/* Right: Nav Items */}
           <div className="flex items-center gap-1 sm:gap-2">
             {navItems.map((item) => (
@@ -81,7 +80,6 @@ export const Navbar = () => {
                 <span className="text-xs hidden md:block">{item.label}</span>
               </button>
             ))}
-
             {/* Profile Dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
